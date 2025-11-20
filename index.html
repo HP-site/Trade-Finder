@@ -1,9 +1,10 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Local Contractor Finder</title>
+    <title>Trade Finder</title>
+    <!-- External Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
@@ -39,11 +40,13 @@
 
     <div id="app" class="max-w-4xl mx-auto p-4 md:p-8">
 
+        <!-- HEADER SECTION -->
         <header class="text-center py-6">
             <h1 class="text-4xl font-extrabold text-gray-800 tracking-tight">Find A Local Pro</h1>
             <p class="mt-2 text-lg text-gray-500">Search top-rated contractors in your area.</p>
         </header>
 
+        <!-- QUICK SEARCH FORM -->
         <div class="bg-white p-6 md:p-8 shadow-xl rounded-xl mb-8 border border-gray-100">
             <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
                 <i data-lucide="search" class="w-6 h-6 mr-2 text-primary"></i>
@@ -51,16 +54,19 @@
             </h2>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Trade/Service Input -->
                 <div>
                     <label for="trade" class="block text-sm font-medium text-gray-700 mb-1">Trade/Service</label>
                     <div class="relative">
                         <select id="trade" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150">
                             <option value="">Select a Trade (e.g., Painting)</option>
+                            <!-- Options populated by JavaScript -->
                         </select>
                         <i data-lucide="wrench" class="icon absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
                 </div>
 
+                <!-- Location Input -->
                 <div class="md:col-span-2">
                     <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location (City/Town)</label>
                     <div class="relative">
@@ -70,27 +76,31 @@
                 </div>
             </div>
 
+            <!-- Search Buttons -->
             <div class="mt-6 flex flex-col sm:flex-row gap-4">
                 <button onclick="handleSearch()" class="flex-1 bg-primary hover:bg-secondary text-white font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center">
                     <i data-lucide="search" class="w-5 h-5 mr-2"></i>
                     Search Contractors
-                </button>
+            </div>
+         </button>
                 <a href="#contractor-signup" class="flex-1 bg-accent/10 text-accent font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center border border-accent/30">
                     <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
                     Contractor Sign Up
                 </a>
-            </div>
         </div>
 
+        <!-- SEARCH RESULTS CONTAINER -->
         <div id="results-container" class="mt-8">
             <h2 id="results-heading" class="text-xl font-bold text-gray-700 mb-4">Top Contractors Near You</h2>
             <div id="contractor-list" class="grid gap-6">
-                </div>
+                <!-- Contractor cards will be injected here -->
+            </div>
             <p id="no-results" class="hidden text-center text-gray-500 p-8">
                 No contractors found matching your criteria. Try a different trade or location.
             </p>
         </div>
 
+        <!-- CONTRACTOR SIGN UP FORM -->
         <div id="contractor-signup" class="bg-white p-6 md:p-8 shadow-xl rounded-xl mb-8 mt-12 border-2 border-dashed border-accent/50">
             <h2 class="text-2xl font-semibold text-gray-700 mb-6 flex items-center">
                 <i data-lucide="user-plus" class="w-6 h-6 mr-2 text-accent"></i>
@@ -136,6 +146,7 @@
 
     </div>
 
+    <!-- MESSAGE MODAL (Used instead of alert()) -->
     <div id="message-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full text-center">
             <i id="modal-icon" data-lucide="alert-triangle" class="w-10 h-10 mx-auto text-yellow-500 mb-3"></i>
@@ -147,6 +158,7 @@
         </div>
     </div>
 
+    <!-- JAVASCRIPT LOGIC -->
     <script>
         // --- DATA STORE ------------------------------------
         const contractors = [
@@ -253,7 +265,7 @@
             if (typeof rating === 'string') {
                 return `<span class="font-semibold ml-1">${rating}</span>`;
             }
-            
+
             // For numeric ratings (e.g., 4.7)
             const fullStars = Math.floor(rating);
             let starsHtml = '';
@@ -269,7 +281,7 @@
             }
             return `<div class="flex items-center">${starsHtml}<span class="font-semibold ml-2 text-yellow-700">${rating}</span></div>`;
         }
-        
+
         /**
          * Renders the list of contractors.
          * @param {Array<Object>} list The filtered list of contractors.
@@ -288,7 +300,7 @@
             list.forEach(contractor => {
                 const card = document.createElement('div');
                 card.className = 'bg-white p-5 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-200';
-                
+
                 // Escape characters for use in the showMessage function call
                 const contractorNameEscaped = contractor.name.replace(/'/g, "\\'");
                 const contractorPhoneEscaped = contractor.phone.replace(/'/g, "\\'");
@@ -332,11 +344,12 @@
             lucide.createIcons();
             resultsHeadingEl.textContent = `Found ${list.length} Contractors Near You`;
         }
-        
+
         /**
          * Populates the Trade/Service select dropdown.
          */
         function populateTradeSelect() {
+            // Get unique trades, sort them alphabetically, and convert to lower case for comparison
             const trades = [...new Set(contractors.map(c => c.trade))].sort();
             trades.forEach(trade => {
                 const option = document.createElement('option');
@@ -345,7 +358,7 @@
                 tradeSelectEl.appendChild(option);
             });
         }
-        
+
         /**
          * Filters the contractor list based on user input.
          */
@@ -355,16 +368,16 @@
 
             if (!trade && !location) {
                 showMessage("Search Required", "Please select a **Trade/Service** or enter a **Location** to search.", "alert-triangle", "text-yellow-500");
-                // Render all contractors if both fields are empty, or none, depending on desired UX
-                // For this demo, we'll show all if no filters are applied
-                renderContractors(contractors); 
+                // If no filters, show all contractors
+                renderContractors(contractors);
                 return;
             }
 
             const filteredList = contractors.filter(contractor => {
                 const matchesTrade = !trade || contractor.trade.toLowerCase() === trade;
+                // Use includes for location to allow partial matches (e.g., searching "didsbury" matches "Didsbury Alberta")
                 const matchesLocation = !location || contractor.location.toLowerCase().includes(location);
-                
+
                 return matchesTrade && matchesLocation;
             });
 
@@ -384,10 +397,9 @@
                 form.reportValidity();
                 return;
             }
-            
+
             // Serialize form data
             const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
 
             try {
                 // Send data to Formspree endpoint
@@ -426,17 +438,21 @@
             }
         }
 
-        // --- INITIALIZATION --------------------------------
+        // --- INITIALIZATION (Crucial for GitHub Pages data display) --------------------------------
         
+        // This ensures the JavaScript runs AFTER the HTML elements are fully loaded,
+        // which prevents the "data doesn't show up" issue.
         document.addEventListener('DOMContentLoaded', () => {
-            // Create all Lucide icons on initial load
+            // 1. Create all Lucide icons on initial load (including those in the modal)
             lucide.createIcons();
-            
-            // Populate the trade filter and render the initial list
+
+            // 2. Populate the trade filter dropdown with data from the contractors array
             populateTradeSelect();
+
+            // 3. Render the full list of contractors initially (before any search filters are applied)
             renderContractors(contractors);
         });
-        
+
         // Expose functions globally for inline HTML event handlers
         window.handleSearch = handleSearch;
         window.handleContractorSignup = handleContractorSignup;
@@ -446,4 +462,4 @@
 
 </body>
 </html>
-                   
+
