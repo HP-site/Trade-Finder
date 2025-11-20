@@ -1,13 +1,13 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trade Finder</title>
+    <title>Local Contractor Finder</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
-        /* Custom Tailwind Configuration */
+        /* Custom Tailwind Configuration (Inline for Demo) */
         tailwind.config = {
             theme: {
                 extend: {
@@ -69,18 +69,18 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="mt-6 flex flex-col sm:flex-row gap-4">
-                <button onclick="handleSearch()" class="flex-1 bg-primary hover:bg-secondary text-gray font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center">
+                <button onclick="handleSearch()" class="flex-1 bg-primary hover:bg-secondary text-white font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center">
                     <i data-lucide="search" class="w-5 h-5 mr-2"></i>
                     Search Contractors
-                
+                </button>
+                <a href="#contractor-signup" class="flex-1 bg-accent/10 text-accent font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center border border-accent/30">
+                    <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
+                    Contractor Sign Up
+                </a>
             </div>
-            </div></button>
-<a href="#contractor-signup" class="flex-1 bg-accent/10 text-accent font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center border border-accent/30">
-    <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
-    Contractor Sign Up
-</a>
+        </div>
 
         <div id="results-container" class="mt-8">
             <h2 id="results-heading" class="text-xl font-bold text-gray-700 mb-4">Top Contractors Near You</h2>
@@ -98,7 +98,7 @@
             </h2>
             <p class="text-gray-500 mb-4">Are you a top-rated pro? Submit your details for review and get listed!</p>
 
-            <form id="signup-form" onsubmit="handleContractorSignup(event)" 
+            <form id="signup-form" onsubmit="handleContractorSignup(event)"
                   action="https://formspree.io/f/mgvdaeqo" method="POST" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -114,7 +114,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                         <label for="c-location" class="block text-sm font-medium text-gray-700 mb-1">Service Area (City/Town)</label>
-                        <input type="text" id="c-location" name="location:" required placeholder="e.g., Calgary" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primarytransition duration-150">
+                        <input type="text" id="c-location" name="location:" required placeholder="e.g., Calgary" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150">
                     </div>
                     <div>
                         <label for="c-phone" class="block text-sm font-medium text-gray-700 mb-1">Phone</label>
@@ -126,266 +126,70 @@
                     <label for="c-email" class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
                     <input type="email" id="c-email" name="email:" required placeholder="contact@example.com" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150">
                 </div>
-                
-                
 
-                <button type="submit" class="w-full bg-accent hover:bg-blue-600 text-gray font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center">
+                <button type="submit" class="w-full bg-accent hover:bg-blue-600 text-white font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center">
                     <i data-lucide="send-horizontal" class="w-5 h-5 mr-2"></i>
                     Submit for Review
                 </button>
             </form>
         </div>
-        </div>
+
+    </div>
 
     <div id="message-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full text-center">
             <i id="modal-icon" data-lucide="alert-triangle" class="w-10 h-10 mx-auto text-yellow-500 mb-3"></i>
             <h3 id="modal-title" class="text-xl font-semibold mb-2">Notice</h3>
             <p id="modal-message" class="text-gray-600 mb-4"></p>
-            <button onclick="closeModal()" class="bg-accent text-gray py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-150">
+            <button onclick="closeModal()" class="bg-accent text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-150">
                 Close
             </button>
         </div>
     </div>
 
     <script>
-        // --- Data Store ----- ----------------------
+        // --- DATA STORE ------------------------------------
         const contractors = [
             { id: 1, name: "House Painting", trade: "Painting", location: "Didsbury Alberta", rating: 5, jobs: 247, phone: "(403) 471-3822", email: "housepainting17@gmail.com" },
-            
             { id: 2, name: "Majestic Builders", trade: "Renovation", location: "Olds Alberta", phone: "(587) 573-8845", email: "majesticbuilders20 @gmail.com", rating: 4.7, jobs: 35 },
-            
-    { id: 3, name: "Action Auger",
-trade: "Plumbing",
-location: "Olds",
-rating: "unrated",
-jobs: 0,
-phone: "(403) 556-7585",
-email: "no email found" },
-            
-    { id: 4, name: "Gentlemen Plumbers",
-trade: "Plumbing",
-location: "Olds",
-rating: "unrated",
-jobs: 0,
-phone: "(587) 796-0617",
-email: "no email found" },
-           
-    { id: 5, name: "Alberta Indoor Comfort",
-trade: "Plumbing",
-location: "Olds",
-rating: "unrated",
-jobs: 0,
-phone: "(587) 792-1456",
-email: "no email found" },
-            
-    { id: 6, name: "Protech Heating Cooling & Plumbing",
-trade: "HVAC",
-location: "Olds",
-rating: "unrated",
-jobs: 0,
-phone: "(403) 586-6915",
-email: "info@protechhvac.ca" },
-            
-    { id: 7, name: "Bruin's Plumbing & Heating",
-  trade: "Plumbing",
-  location: "Olds",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 343-6060",
-  email: "info@bruinsplumbing.com" },
-            
-    { id: 8, name: "Sinks and Stinks Plumbing Ltd",
-  trade: "Plumbing",
-  location: "Olds",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 507-3040",
-  email: "contract@example.com"},
-  
-  { id: 9, name: "JPL Plumbing & Heating Ltd.",
-  trade: "Plumbing",
-  location: "Olds",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 586-4024",
-  email: "no email found"},
-  
-  { id: 10, name: "Omega Plumbing & Heating Ltd.",
-  trade: "Plumbing",
-  location: "Didsbury",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 994-7378",
-  email: "no email found"},
-  
-  { id: 11, name: "Weaner's Plumbing & Heating Ltd.",
-  trade: "Plumbing",
-  location: "Didsbury",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 335-9990",
-  email: "no email found" },
-  
-  { id:12, name: "Torque Plumbing",
-  trade: "Plumbing",
-  location: "Carstairs",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(587) 777-9514",
-  email: "no email found"},
-  
-  { id:13, name: "Bears Valley Roofing",
-    trade: "Roofing",
-    location: "Didsbury",
-    rating: "unrated",
-    jobs: 0,
-    phone: "(403) 333-0319",
-    email: "no email found" },
-    
-            { id: 14, name: "K & T Exteriors Ltd.",
-  trade: "Siding",
-  location: "Didsbury",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 999-3315",
-  email: "no email found"},
-  
-  {id:15,name: "Sunshine Coast Roofing",
-  trade: "Roofing",
-  location: "Didsbury",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 507-7029",
-  email: "No email found"},
-  
-  {id:16,name: "AM Exteriors",
-    trade: "Siding",
-    location: "Didsbury",
-    rating: "unrated",
-    jobs: 0,
-    phone: "(403) 559-6651",
-    email: "No email found"},
-    
-    {id:17, name: "C.D.C. Electrical Services Inc.",
-    trade: "Electrician",
-    location: "Didsbury",
-    rating: "unrated",
-    jobs: 0,
-    phone: "(403) 507-5032",
-    email: "eric@cdcelectricalservices.com"},
-    
-    {id:18, name: "Personal Electric & Controls",
-  trade: "Electrician",
-  location: "Didsbury",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 335-4355",
-  email: "info@personalelectric.ca"},
-  
-  {id:19, name: "Heck Electric Inc.",
-  trade: "Electrician",
-  location: "Didsbury",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 994-0081",
-  email: "No email found"},
-  
-  {id:20, name: "Current Connexion Electrical Services",
-    trade: "Electrician",
-    location: "Didsbury",
-    rating: "unrated",
-    jobs: 0,
-    phone: "(403) 586-9956",
-    email: "No email found"},
-    
-    {id:21,name: "Triple H Electric",
-  trade: "Electrician",
-  location: "Didsbury",
-  rating: "unrated",
-  jobs: 0,
-  phone: "No public phone found",
-  email: "No public email found"},
-  
-  {id:22, 
-  name: "Mountainview Painters",
-  trade: "Painting",
-  location: "Sundre",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 638-0000",
-  email: "contract@example.com"
-},
-{id:23,
-  name: "Pillerworx Handyman Services",
-  trade: "Painting",
-  location: "Olds",
-  rating: "A+ (BBB)",
-  jobs: 0,
-  phone: "(403) 556-0403",
-  email: "contract@example.com"
-},
-{id:24,
-  name: "The Perfect Brush Painting",
-  trade: "Painting",
-  location: "Didsbury",
-  rating: "unrated",
-  jobs: 0,
-  phone: "(403) 888-2936",
-  email: "contract@example.com"
-},
-{id:25,
-  name: "Riteline Renovations Inc.",
-  trade: "Renovation",
-  location: "Didsbury",
-  rating: "A+ (BBB)",
-  jobs: 0,
-  phone: "(403) 703-0575",
-  email: "contract@example.com"
-},
-{id:26,
-  name: "ABC Drywall and Paint Ltd.",
-  trade: "Drywall",
-  location: "Carstairs",
-  rating: "A+ (BBB)",
-  jobs: 0,
-  phone: "(587) 581-7686",
-  email: "contract@example.com"
-},
-{id:27,
-  name: "Horizon Coatings Ltd.",
-  trade: "Painting",
-  location: "Carstairs",
-  rating: "A+ (BBB)",
-  jobs: 0,
-  phone: "(403) 803-5972",
-  email: "contract@example.com"
-},
-{id:28,
-  name: "Bernie's Painting",
-  trade: "Painting",
-  location: "Bowden",
-  rating: "A+ (BBB)",
-  jobs: 0,
-  phone: "(403) 392-7501",
-  email: "contract@example.com"
-},
-
-
-
-
-
+            { id: 3, name: "Action Auger", trade: "Plumbing", location: "Olds", rating: "unrated", jobs: 0, phone: "(403) 556-7585", email: "no email found" },
+            { id: 4, name: "Gentlemen Plumbers", trade: "Plumbing", location: "Olds", rating: "unrated", jobs: 0, phone: "(587) 796-0617", email: "no email found" },
+            { id: 5, name: "Alberta Indoor Comfort", trade: "Plumbing", location: "Olds", rating: "unrated", jobs: 0, phone: "(587) 792-1456", email: "no email found" },
+            { id: 6, name: "Protech Heating Cooling & Plumbing", trade: "HVAC", location: "Olds", rating: "unrated", jobs: 0, phone: "(403) 586-6915", email: "info@protechhvac.ca" },
+            { id: 7, name: "Bruin's Plumbing & Heating", trade: "Plumbing", location: "Olds", rating: "unrated", jobs: 0, phone: "(403) 343-6060", email: "info@bruinsplumbing.com" },
+            { id: 8, name: "Sinks and Stinks Plumbing Ltd", trade: "Plumbing", location: "Olds", rating: "unrated", jobs: 0, phone: "(403) 507-3040", email: "contract@example.com"},
+            { id: 9, name: "JPL Plumbing & Heating Ltd.", trade: "Plumbing", location: "Olds", rating: "unrated", jobs: 0, phone: "(403) 586-4024", email: "no email found"},
+            { id: 10, name: "Omega Plumbing & Heating Ltd.", trade: "Plumbing", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 994-7378", email: "no email found"},
+            { id: 11, name: "Weaner's Plumbing & Heating Ltd.", trade: "Plumbing", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 335-9990", email: "no email found" },
+            { id: 12, name: "Torque Plumbing", trade: "Plumbing", location: "Carstairs", rating: "unrated", jobs: 0, phone: "(587) 777-9514", email: "no email found"},
+            { id: 13, name: "Bears Valley Roofing", trade: "Roofing", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 333-0319", email: "no email found" },
+            { id: 14, name: "K & T Exteriors Ltd.", trade: "Siding", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 999-3315", email: "no email found"},
+            { id: 15, name: "Sunshine Coast Roofing", trade: "Roofing", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 507-7029", email: "No email found"},
+            { id: 16, name: "AM Exteriors", trade: "Siding", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 559-6651", email: "No email found"},
+            { id: 17, name: "C.D.C. Electrical Services Inc.", trade: "Electrician", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 507-5032", email: "eric@cdcelectricalservices.com"},
+            { id: 18, name: "Personal Electric & Controls", trade: "Electrician", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 335-4355", email: "info@personalelectric.ca"},
+            { id: 19, name: "Heck Electric Inc.", trade: "Electrician", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 994-0081", email: "No email found"},
+            { id: 20, name: "Current Connexion Electrical Services", trade: "Electrician", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 586-9956", email: "No email found"},
+            { id: 21, name: "Triple H Electric", trade: "Electrician", location: "Didsbury", rating: "unrated", jobs: 0, phone: "No public phone found", email: "No public email found"},
+            { id: 22, name: "Mountainview Painters", trade: "Painting", location: "Sundre", rating: "unrated", jobs: 0, phone: "(403) 638-0000", email: "contract@example.com"},
+            { id: 23, name: "Pillerworx Handyman Services", trade: "Painting", location: "Olds", rating: "A+ (BBB)", jobs: 0, phone: "(403) 556-0403", email: "contract@example.com"},
+            { id: 24, name: "The Perfect Brush Painting", trade: "Painting", location: "Didsbury", rating: "unrated", jobs: 0, phone: "(403) 888-2936", email: "contract@example.com"},
+            { id: 25, name: "Riteline Renovations Inc.", trade: "Renovation", location: "Didsbury", rating: "A+ (BBB)", jobs: 0, phone: "(403) 703-0575", email: "contract@example.com"},
+            { id: 26, name: "ABC Drywall and Paint Ltd.", trade: "Drywall", location: "Carstairs", rating: "A+ (BBB)", jobs: 0, phone: "(587) 581-7686", email: "contract@example.com"},
+            { id: 27, name: "Horizon Coatings Ltd.", trade: "Painting", location: "Carstairs", rating: "A+ (BBB)", jobs: 0, phone: "(403) 803-5972", email: "contract@example.com"},
+            { id: 28, name: "Bernie's Painting", trade: "Painting", location: "Bowden", rating: "A+ (BBB)", jobs: 0, phone: "(403) 392-7501", email: "contract@example.com"},
         ];
 
+        // --- DOM ELEMENTS ----------------------------------
         const contractorListEl = document.getElementById('contractor-list');
         const tradeSelectEl = document.getElementById('trade');
         const locationInputEl = document.getElementById('location');
         const resultsHeadingEl = document.getElementById('results-heading');
         const noResultsEl = document.getElementById('no-results');
-        const signupFormEl = document.getElementById('signup-form'); 
+        const signupFormEl = document.getElementById('signup-form');
         const FORMSPREE_URL = 'https://formspree.io/f/mgvdaeqo'; // Your actual Formspree URL
 
-        // --- Utility Functions ---
+        // --- UTILITY FUNCTIONS -----------------------------
 
         /**
          * Shows a custom modal message.
@@ -398,11 +202,11 @@ email: "info@protechhvac.ca" },
          */
         function showMessage(title, message, icon = 'info', iconColor = 'text-accent', phone = null, email = null) {
             document.getElementById('modal-title').textContent = title;
-            
+
             const modalMessageEl = document.getElementById('modal-message');
-            
+
             // Logic to display contact details for a contractor
-            if (phone && email) {
+            if (phone && email && phone !== 'No public phone found' && email !== 'no email found') {
                 const contactHtml = `
                     <p class="text-gray-600 mb-4">${message}</p>
                     <div class="text-left space-y-2 mb-4 p-4 border rounded-lg bg-gray-50">
@@ -423,12 +227,12 @@ email: "info@protechhvac.ca" },
                 // Logic for simple messages (search checks, sign up confirmation)
                 modalMessageEl.textContent = message;
             }
-            
+
             const modalIconEl = document.getElementById('modal-icon');
             modalIconEl.className = '';
             modalIconEl.classList.add('w-10', 'h-10', 'mx-auto', 'mb-3', iconColor);
             modalIconEl.setAttribute('data-lucide', icon);
-            
+
             lucide.createIcons(); // Re-render icons inside the modal
             document.getElementById('message-modal').classList.remove('hidden');
         }
@@ -438,6 +242,35 @@ email: "info@protechhvac.ca" },
         }
 
         /**
+         * Creates a star rating display HTML string.
+         * @param {string|number} rating The contractor's rating.
+         * @returns {string} HTML for rating display.
+         */
+        function getRatingHtml(rating) {
+            if (rating === 'unrated' || rating === 0) {
+                return '<span class="font-semibold ml-1 text-gray-400">Unrated</span>';
+            }
+            if (typeof rating === 'string') {
+                return `<span class="font-semibold ml-1">${rating}</span>`;
+            }
+            
+            // For numeric ratings (e.g., 4.7)
+            const fullStars = Math.floor(rating);
+            let starsHtml = '';
+            for (let i = 0; i < 5; i++) {
+                if (i < fullStars) {
+                    starsHtml += `<i data-lucide="star" class="icon w-4 h-4 text-yellow-500 fill-yellow-500"></i>`;
+                } else if (rating % 1 !== 0 && i === fullStars) {
+                    // Simple half-star representation or just show the number
+                    starsHtml += `<i data-lucide="star-half" class="icon w-4 h-4 text-yellow-500 fill-yellow-500"></i>`;
+                } else {
+                    starsHtml += `<i data-lucide="star" class="icon w-4 h-4 text-gray-300"></i>`;
+                }
+            }
+            return `<div class="flex items-center">${starsHtml}<span class="font-semibold ml-2 text-yellow-700">${rating}</span></div>`;
+        }
+        
+        /**
          * Renders the list of contractors.
          * @param {Array<Object>} list The filtered list of contractors.
          */
@@ -446,6 +279,7 @@ email: "info@protechhvac.ca" },
 
             if (list.length === 0) {
                 noResultsEl.classList.remove('hidden');
+                resultsHeadingEl.textContent = `No Contractors Found`;
                 return;
             }
 
@@ -454,12 +288,18 @@ email: "info@protechhvac.ca" },
             list.forEach(contractor => {
                 const card = document.createElement('div');
                 card.className = 'bg-white p-5 rounded-xl shadow-md border border-gray-100 hover:shadow-lg transition duration-200';
+                
+                // Escape characters for use in the showMessage function call
+                const contractorNameEscaped = contractor.name.replace(/'/g, "\\'");
+                const contractorPhoneEscaped = contractor.phone.replace(/'/g, "\\'");
+                const contractorEmailEscaped = contractor.email.replace(/'/g, "\\'");
+
                 card.innerHTML = `
                     <div class="flex items-center mb-3">
                         <i data-lucide="hard-hat" class="w-6 h-6 mr-3 text-secondary"></i>
                         <h3 class="text-xl font-bold text-gray-800">${contractor.name}</h3>
                     </div>
-                    
+
                     <div class="space-y-1 text-sm text-gray-600 mb-4">
                         <p class="flex items-center">
                             <i data-lucide="briefcase" class="icon w-4 h-4 mr-2 text-primary"></i>
@@ -469,17 +309,18 @@ email: "info@protechhvac.ca" },
                             <i data-lucide="map-pin" class="icon w-4 h-4 mr-2 text-accent"></i>
                             ${contractor.location}
                         </p>
-                        <p class="flex items-center">
+                        <div class="flex items-center">
                             <i data-lucide="star" class="icon w-4 h-4 mr-2 text-yellow-500 fill-yellow-500"></i>
-                            Rating: <span class="font-semibold ml-1">${contractor.rating}</span> (${contractor.jobs} Jobs)
-                        </p>
+                            Rating: ${getRatingHtml(contractor.rating)}
+                            <span class="ml-2">(${contractor.jobs} Jobs)</span>
+                        </div>
                     </div>
 
                     <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-4">
                         <a href="tel:${contractor.phone}" class="flex-1 bg-primary text-white py-2 px-4 rounded-lg text-center text-sm font-medium hover:bg-secondary transition duration-150">
                             <i data-lucide="phone" class="icon w-4 h-4 mr-1"></i> Call Now
                         </a>
-                        <button onclick="showMessage('Contact ${contractor.name}', 'Please use the contact details below to get in touch.', 'send-horizontal', 'text-accent', '${contractor.phone}', '${contractor.email}')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-center text-sm font-medium hover:bg-gray-200 transition duration-150 border border-gray-200">
+                        <button onclick="showMessage('Contact ${contractorNameEscaped}', 'Please use the contact details below to get in touch.', 'send-horizontal', 'text-accent', '${contractorPhoneEscaped}', '${contractorEmailEscaped}')" class="flex-1 bg-gray-100 text-gray-700 py-2 px-4 rounded-lg text-center text-sm font-medium hover:bg-gray-200 transition duration-150 border border-gray-200">
                             <i data-lucide="mail" class="icon w-4 h-4 mr-1"></i> Message
                         </button>
                     </div>
@@ -489,4 +330,120 @@ email: "info@protechhvac.ca" },
 
             // Re-render Lucide icons after injecting HTML
             lucide.createIcons();
-            resultsHeadingEl.textContent = `Found ${list.
+            resultsHeadingEl.textContent = `Found ${list.length} Contractors Near You`;
+        }
+        
+        /**
+         * Populates the Trade/Service select dropdown.
+         */
+        function populateTradeSelect() {
+            const trades = [...new Set(contractors.map(c => c.trade))].sort();
+            trades.forEach(trade => {
+                const option = document.createElement('option');
+                option.value = trade.toLowerCase();
+                option.textContent = trade;
+                tradeSelectEl.appendChild(option);
+            });
+        }
+        
+        /**
+         * Filters the contractor list based on user input.
+         */
+        function handleSearch() {
+            const trade = tradeSelectEl.value.toLowerCase().trim();
+            const location = locationInputEl.value.toLowerCase().trim();
+
+            if (!trade && !location) {
+                showMessage("Search Required", "Please select a **Trade/Service** or enter a **Location** to search.", "alert-triangle", "text-yellow-500");
+                // Render all contractors if both fields are empty, or none, depending on desired UX
+                // For this demo, we'll show all if no filters are applied
+                renderContractors(contractors); 
+                return;
+            }
+
+            const filteredList = contractors.filter(contractor => {
+                const matchesTrade = !trade || contractor.trade.toLowerCase() === trade;
+                const matchesLocation = !location || contractor.location.toLowerCase().includes(location);
+                
+                return matchesTrade && matchesLocation;
+            });
+
+            renderContractors(filteredList);
+        }
+
+        /**
+         * Handles the contractor signup form submission.
+         * Note: This prevents default submission and uses the Formspree URL.
+         */
+        async function handleContractorSignup(event) {
+            event.preventDefault();
+
+            // Basic client-side validation check
+            const form = event.target;
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            // Serialize form data
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                // Send data to Formspree endpoint
+                const response = await fetch(FORMSPREE_URL, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    showMessage(
+                        "Signup Successful! 🎉",
+                        "Thank you for submitting your details. We will review your application and be in touch shortly.",
+                        "check-circle",
+                        "text-primary"
+                    );
+                    form.reset(); // Clear the form on success
+                } else {
+                    const errorData = await response.json();
+                    showMessage(
+                        "Submission Error 🙁",
+                        `There was an issue processing your request: ${errorData.error || 'Server error.'} Please try again.`,
+                        "x-circle",
+                        "text-red-500"
+                    );
+                }
+            } catch (error) {
+                showMessage(
+                    "Connection Error 🔌",
+                    "Could not connect to the submission service. Please check your network and try again.",
+                    "cloud-off",
+                    "text-red-500"
+                );
+            }
+        }
+
+        // --- INITIALIZATION --------------------------------
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // Create all Lucide icons on initial load
+            lucide.createIcons();
+            
+            // Populate the trade filter and render the initial list
+            populateTradeSelect();
+            renderContractors(contractors);
+        });
+        
+        // Expose functions globally for inline HTML event handlers
+        window.handleSearch = handleSearch;
+        window.handleContractorSignup = handleContractorSignup;
+        window.showMessage = showMessage;
+        window.closeModal = closeModal;
+    </script>
+
+</body>
+</html>
+                   
