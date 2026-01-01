@@ -203,7 +203,7 @@
             counts[id] = (counts[id] || 0) + 1;
             localStorage.setItem('contractor_calls', JSON.stringify(counts));
             
-            // Send Tracking Email
+            // Send Tracking Email (Triggers every time Call Now is clicked)
             sendTrackingEmail(`Call Tracked: ${contractor.name}`, {
                 type: "PHONE_CALL_INITIATED",
                 contractor_name: contractor.name,
@@ -235,14 +235,8 @@
             const starButtons = document.querySelectorAll('.star-btn');
             starButtons.forEach((btn, index) => {
                 const starLevel = index + 1;
-                
-                // Sequential Highlight on Hover
                 btn.onmouseenter = () => renderStars(starLevel, 'star-rating-container');
-                
-                // Restore selection on leave
                 btn.onmouseleave = () => renderStars(selectedRating, 'star-rating-container');
-                
-                // Set rating on click
                 btn.onclick = () => {
                     selectedRating = starLevel;
                     renderStars(selectedRating, 'star-rating-container');
@@ -284,14 +278,12 @@
 
             lucide.createIcons();
             document.getElementById('message-modal').classList.remove('hidden');
-
-            // Wait for Lucide to render the SVGs before attaching listeners
             setTimeout(initStarListeners, 100);
         };
 
         const contractors = [
             { id: 1, name: "House Painting", trade: "Painting", location: "Didsbury Alberta", rating: 5, jobs: 247, phone: "(403) 471-3822", email: "housepainting17@gmail.com", description: "Residential interior and exterior painting. 10 years experience. Free estimates." },
-            { id: 2, name: "Majestic Builders", trade: "Renovation", location: "Olds Alberta", phone: "(587) 573-8845", email: "majesticbuilders20 @gmail.com", rating: 4.7, jobs: 35, description: "Custom kitchen and bathroom renovations. Fully licensed and insured." },
+            { id: 2, name: "Majestic Builders", trade: "Renovation", location: "Olds Alberta", phone: "(587) 573-8845", email: "majesticbuilders20 @gmail.com", rating: 4.7, description: "Custom kitchen and bathroom renovations. Fully licensed and insured." },
             { id: 3, name: "Action Auger", trade: "Plumbing", location: "Olds", rating: "unrated", jobs: 0, phone: "(403) 556-7585", email: "no email found", description: "Emergency plumbing and drain cleaning. Available 24/7." },
             { id: 4, name: "Gentlemen Plumbers", trade: "Plumbing", location: "Olds", rating: "unrated", jobs: 0, phone: "(587) 796-0617", email: "no email found", description: "Friendly and professional plumbing services. Hot water tank specialists." },
             { id: 5, name: "Alberta Indoor Comfort", trade: "Plumbing", location: "Olds", rating: "unrated", jobs: 0, phone: "(587) 792-1456", email: "no email found", description: "HVAC and plumbing installations and repairs. Focus on energy efficiency." },
@@ -350,7 +342,6 @@
                     </div>
                     <div class="flex items-center space-x-2 mb-3">
                         ${generateRatingHTML(c.rating)}
-                        <span class="text-sm text-gray-500">(${c.jobs} jobs)</span>
                         <button onclick="handleRate('${c.name}')" class="text-xs text-red-500 font-bold hover:underline cursor-pointer">(rate)</button>
                     </div>
                     <p class="text-gray-600 mb-4 text-sm line-clamp-3">${c.description}</p>
