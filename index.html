@@ -39,7 +39,7 @@
 
         <header class="text-center py-6">
             <h1 class="text-4xl font-extrabold text-gray-800 tracking-tight">Trade Finder</h1>
-            <p class="mt-2 text-lg text-gray-500">Find A Local Pro</p>
+            <p class="mt-2 text-lg text-gray-500">Find A Local Pro Instantly</p>
         </header>
 
         <div class="bg-white p-6 md:p-8 shadow-xl rounded-xl mb-8 border border-gray-100">
@@ -52,8 +52,8 @@
                 <div>
                     <label for="trade" class="block text-sm font-medium text-gray-700 mb-1">Trade/Service</label>
                     <div class="relative">
-                        <select id="trade" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150">
-                            <option value="">Select a Trade</option>
+                        <select id="trade" onchange="handleSearch()" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 outline-none">
+                            <option value="">All Trades</option>
                         </select>
                         <i data-lucide="wrench" class="icon absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
@@ -62,34 +62,22 @@
                 <div>
                     <label for="keyword" class="block text-sm font-medium text-gray-700 mb-1">Key Word Search</label>
                     <div class="relative">
-                        <input type="text" id="keyword" placeholder="e.g., 24/7, commercial" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150">
+                        <input type="text" id="keyword" oninput="handleSearch()" placeholder="e.g., 24/7, commercial" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 outline-none">
                         <i data-lucide="tag" class="icon absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
                 </div>
                 <div>
                     <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location (City/Town)</label>
                     <div class="relative">
-                        <input type="text" id="location" placeholder="e.g., Calgary" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150">
+                        <input type="text" id="location" oninput="handleSearch()" placeholder="e.g., Calgary" class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-primary focus:border-primary transition duration-150 outline-none">
                         <i data-lucide="map-pin" class="icon absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
                     </div>
                 </div>
             </div>
-            
-            <div class="mt-6 flex flex-col sm:flex-row gap-4">
-                <button onclick="handleSearch()" class="flex-1 bg-primary text-grey hover:bg-secondary font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center">
-                    <i data-lucide="search" class="w-5 h-5 mr-2"></i>
-                    Search Contractors
-                </button>
-            </div>
         </div>
         
-        <a href="#contractor-signup" class="flex-1 bg-accent/10 text-accent font-bold py-3 rounded-xl transition duration-300 shadow-md hover:shadow-lg flex items-center justify-center border border-accent/30 mb-8">
-            <i data-lucide="user-plus" class="w-5 h-5 mr-2"></i>
-            Contractor Sign Up
-        </a>
-
-        <div id="results-container" class="mt-8">
-            <h2 id="results-heading" class="text-xl font-bold text-gray-700 mb-4">Top Contractors Near You</h2>
+        <div id="results-container">
+            <h2 id="results-heading" class="text-xl font-bold text-gray-700 mb-4">0 Contractors Found</h2>
             <div id="contractor-list" class="grid gap-6"></div>
             <p id="no-results" class="hidden text-center text-gray-500 p-8">
                 No contractors found matching your criteria. Try a different trade, location, or key word.
@@ -142,29 +130,31 @@
                 </button>
             </form>
         </div>
-    </div>        <footer class="mt-16 pb-12 border-t border-gray-200">
-            <div class="flex flex-col items-center pt-10">
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center mb-8">
-                    <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Share Trade Finder</p>
-                    <div class="bg-gray-50 p-2 rounded-lg">
-                        <img src="TF QR.png" alt="Trade Finder QR Code" class="w-32 h-32 md:w-36 md:h-36">
-                    </div>
+
+    </div>
+
+    <footer class="mt-16 pb-12 border-t border-gray-200">
+        <div class="flex flex-col items-center pt-10">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex flex-col items-center mb-8">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-3">Share Trade Finder</p>
+                <div class="bg-gray-50 p-2 rounded-lg">
+                    <img src="TF QR.png" alt="Trade Finder QR Code" class="w-32 h-32 md:w-36 md:h-36">
                 </div>
-                
-                <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
-                        class="group flex flex-col items-center text-gray-400 hover:text-primary transition-all duration-300">
-                    <div class="mb-2 p-2 rounded-full bg-gray-100 group-hover:bg-primary/10 transition-colors">
-                        <i data-lucide="chevron-up" class="w-6 h-6"></i>
-                    </div>
-                    <span class="text-[10px] font-bold uppercase tracking-[0.2em]">Back to Top</span>
-                </button>
             </div>
             
-            <p class="text-center text-gray-400 text-xs mt-12">
-                &copy; 2026 Trade Finder. Finding Local Pros Made Simple.
-            </p>
-        </footer>
-
+            <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" 
+                    class="group flex flex-col items-center text-gray-400 hover:text-primary transition-all duration-300">
+                <div class="mb-2 p-2 rounded-full bg-gray-100 group-hover:bg-primary/10 transition-colors">
+                    <i data-lucide="chevron-up" class="w-6 h-6"></i>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-[0.2em]">Back to Top</span>
+            </button>
+        </div>
+        
+        <p class="text-center text-gray-400 text-xs mt-12">
+            &copy; 2026 Trade Finder. Finding Local Pros Made Simple.
+        </p>
+    </footer>
 
     <div id="message-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center p-4 z-50">
         <div class="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full text-center">
@@ -180,7 +170,6 @@
     <script>
         const FORMSPREE_URL = "https://formspree.io/f/mgvdaeqo";
 
-        // Internal Tracking System with Email Notification
         const sendTrackingEmail = async (subject, data) => {
             try {
                 await fetch(FORMSPREE_URL, {
@@ -192,97 +181,20 @@
                         sentAt: new Date().toLocaleString()
                     })
                 });
-            } catch (err) {
-                console.error("Tracking error:", err);
-            }
+            } catch (err) { console.error("Tracking error:", err); }
         };
 
         const trackCall = (id) => {
             const contractor = contractors.find(c => c.id === id);
-            const counts = JSON.parse(localStorage.getItem('contractor_calls')) || {};
-            counts[id] = (counts[id] || 0) + 1;
-            localStorage.setItem('contractor_calls', JSON.stringify(counts));
-            
-            // Send Tracking Email (Triggers every time Call Now is clicked)
             sendTrackingEmail(`Call Tracked: ${contractor.name}`, {
                 type: "PHONE_CALL_INITIATED",
                 contractor_name: contractor.name,
-                contractor_id: id,
-                location: contractor.location,
-                total_user_calls: counts[id]
+                location: contractor.location
             });
-        };
-
-        // --- Interactive Rating Logic ---
-        let selectedRating = 0;
-
-        function renderStars(rating, containerId) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const stars = container.querySelectorAll('svg');
-            stars.forEach((star, index) => {
-                if (index < rating) {
-                    star.style.fill = "#facc15"; // yellow-400
-                    star.style.stroke = "#facc15";
-                } else {
-                    star.style.fill = "none";
-                    star.style.stroke = "currentColor";
-                }
-            });
-        }
-
-        function initStarListeners() {
-            const starButtons = document.querySelectorAll('.star-btn');
-            starButtons.forEach((btn, index) => {
-                const starLevel = index + 1;
-                btn.onmouseenter = () => renderStars(starLevel, 'star-rating-container');
-                btn.onmouseleave = () => renderStars(selectedRating, 'star-rating-container');
-                btn.onclick = () => {
-                    selectedRating = starLevel;
-                    renderStars(selectedRating, 'star-rating-container');
-                    const name = document.getElementById('modal-title').textContent.replace('Rate ', '');
-                    
-                    sendTrackingEmail(`Rating Submitted: ${name}`, {
-                        type: "RATING_SUBMITTED",
-                        contractor_name: name,
-                        rating: selectedRating
-                    });
-
-                    setTimeout(() => {
-                        closeModal();
-                    }, 200);
-                };
-            });
-        }
-
-        const handleRate = (name) => {
-            selectedRating = 0;
-            const modalTitle = document.getElementById('modal-title');
-            const modalContent = document.getElementById('modal-message-content');
-            const iconEl = document.getElementById('modal-icon');
-
-            modalTitle.textContent = `Rate ${name}`;
-            iconEl.className = `w-10 h-10 mx-auto mb-3 text-yellow-400`;
-            iconEl.setAttribute('data-lucide', 'star');
-
-            modalContent.innerHTML = `
-                <p class="mb-4">How was your experience?</p>
-                <div id="star-rating-container" class="flex justify-center space-x-2 mb-2">
-                    ${[1,2,3,4,5].map(i => `
-                        <button class="star-btn p-1 transition-transform hover:scale-110" data-val="${i}">
-                            <i data-lucide="star" class="w-8 h-8 text-gray-300"></i>
-                        </button>
-                    `).join('')}
-                </div>
-            `;
-
-            lucide.createIcons();
-            document.getElementById('message-modal').classList.remove('hidden');
-            setTimeout(initStarListeners, 100);
         };
 
         const contractors = [
-            { id: 1, name: "House Painting", trade: "Painting", location: "Didsbury Alberta", rating: 5, jobs: 247, phone: "(403) 471-3822", email: "housepainting17@gmail.com", description: "Residential interior and exterior painting. 10 years experience. Free estimates." },
+            { id: 1, name: "House Painting", trade: "Painting", location: "Didsbury Alberta", rating: 5, phone: "(403) 471-3822", description: "Residential interior and exterior painting. 10 years experience. Free estimates." },
             
         ];
 
@@ -290,6 +202,7 @@
         const tradeSelectEl = document.getElementById('trade');
         const keywordInputEl = document.getElementById('keyword'); 
         const locationInputEl = document.getElementById('location');
+        const resultsHeading = document.getElementById('results-heading');
 
         function generateRatingHTML(rating) {
             const numRating = parseFloat(rating);
@@ -319,7 +232,7 @@
                         <button onclick="handleRate('${c.name}')" class="text-xs text-red-500 font-bold hover:underline cursor-pointer">(rate)</button>
                     </div>
                     <p class="text-gray-600 mb-4 text-sm line-clamp-3">${c.description}</p>
-                    <a href="tel:${phoneClean}" onclick="trackCall(${c.id})" class="w-full bg-white text-grey hover:bg-gray-800 font-bold py-3 rounded-lg transition duration-300 flex items-center justify-center">
+                    <a href="tel:${phoneClean}" onclick="trackCall(${c.id})" class="w-full bg-gray-900 text-white hover:bg-gray-800 font-bold py-3 rounded-lg transition duration-300 flex items-center justify-center">
                         <i data-lucide="phone" class="w-5 h-5 mr-2"></i>Call Now
                     </a>
                 </div>
@@ -328,7 +241,7 @@
 
         function populateTradeDropdown() {
             const trades = [...new Set(contractors.map(c => c.trade))].sort();
-            tradeSelectEl.innerHTML = '<option value="">Select a Trade</option>' + 
+            tradeSelectEl.innerHTML = '<option value="">All Trades</option>' + 
                 trades.map(t => `<option value="${t}">${t}</option>`).join('');
         }
 
@@ -344,9 +257,55 @@
             );
             
             contractorListEl.innerHTML = filtered.map(c => generateContractorCardHTML(c)).join('');
+            resultsHeading.textContent = `${filtered.length} Contractor${filtered.length === 1 ? '' : 's'} Found`;
             document.getElementById('no-results').classList.toggle('hidden', filtered.length > 0);
             lucide.createIcons();
         }
+
+        let selectedRating = 0;
+        function renderStars(rating, containerId) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const stars = container.querySelectorAll('svg');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.style.fill = "#facc15"; star.style.stroke = "#facc15";
+                } else {
+                    star.style.fill = "none"; star.style.stroke = "currentColor";
+                }
+            });
+        }
+
+        const handleRate = (name) => {
+            selectedRating = 0;
+            const modalTitle = document.getElementById('modal-title');
+            const modalContent = document.getElementById('modal-message-content');
+            modalTitle.textContent = `Rate ${name}`;
+            modalContent.innerHTML = `
+                <p class="mb-4">How was your experience?</p>
+                <div id="star-rating-container" class="flex justify-center space-x-2 mb-2">
+                    ${[1,2,3,4,5].map(i => `
+                        <button class="star-btn p-1 transition-transform hover:scale-110">
+                            <i data-lucide="star" class="w-8 h-8 text-gray-300"></i>
+                        </button>
+                    `).join('')}
+                </div>
+            `;
+            lucide.createIcons();
+            document.getElementById('message-modal').classList.remove('hidden');
+            
+            setTimeout(() => {
+                document.querySelectorAll('.star-btn').forEach((btn, idx) => {
+                    btn.onclick = () => {
+                        selectedRating = idx + 1;
+                        sendTrackingEmail(`Rating: ${name}`, { type: "RATING", name, stars: selectedRating });
+                        closeModal();
+                    };
+                    btn.onmouseenter = () => renderStars(idx+1, 'star-rating-container');
+                    btn.onmouseleave = () => renderStars(selectedRating, 'star-rating-container');
+                });
+            }, 100);
+        };
 
         function closeModal() { document.getElementById('message-modal').classList.add('hidden'); }
 
